@@ -1,0 +1,87 @@
+mql5
+//+------------------------------------------------------------------+
+//|                      Better Period Separators MT5                  |
+//|                        https://forexroboteasy.com                  |
+//|                         Developed by Forex Robot Easy Team         |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//| Customizable Period Separators                                    |
+//| - Enable users to determine the period for better flexibility.    |
+//| - Implement the ability to create personalized period separators. |
+//| - Enhance the usability of the MT5 platform.                      |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//| Specific Time Placement for Intraday Charts                       |
+//| - Cater to the needs of intraday traders.                         |
+//| - Allow users to place period separators at a specific time.      |
+//| - Provide the option to insert additional period separators.      |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Set the period separators
+    SetPeriodSeparators();
+    
+    return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Expert deinitialization function                                 |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+    // Remove the period separators
+    RemovePeriodSeparators();
+}
+
+//+------------------------------------------------------------------+
+//| Set the period separators                                         |
+//+------------------------------------------------------------------+
+void SetPeriodSeparators()
+{
+    // Define the period separators
+    datetime separator1 = D'2022.01.01 00:00:00'; // Custom separator 1
+    datetime separator2 = D'2022.03.01 00:00:00'; // Custom separator 2
+    
+    // Set the period separators
+    ChartSetInteger(0, CHART_PERIOD_SEPARATOR, separator1);
+    ChartSetInteger(0, CHART_PERIOD_SEPARATOR, separator2);
+}
+
+//+------------------------------------------------------------------+
+//| Remove the period separators                                      |
+//+------------------------------------------------------------------+
+void RemovePeriodSeparators()
+{
+    // Remove all period separators
+    ChartSetInteger(0, CHART_PERIOD_SEPARATOR, 0);
+}
+
+//+------------------------------------------------------------------+
+//| Expert start function                                             |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+    // Place your trading logic here
+    
+    // Check for specific time placement
+    if (TimeHour(TimeCurrent()) == 12 && TimeMinute(TimeCurrent()) == 0)
+    {
+        // Insert additional period separator at 12:00
+        InsertPeriodSeparator(TimeCurrent());
+    }
+}
+
+//+------------------------------------------------------------------+
+//| Insert additional period separator at a specific time             |
+//+------------------------------------------------------------------+
+void InsertPeriodSeparator(const datetime time)
+{
+    // Insert the period separator
+    ChartSetInteger(0, CHART_PERIOD_SEPARATOR, time);
+}
